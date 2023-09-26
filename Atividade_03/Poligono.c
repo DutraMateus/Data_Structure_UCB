@@ -1,14 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct {
+typedef struct
+{
     double x, y;
 } Point;
 
-double calculatePolygonArea(Point vertices[], int numVertices) {
+double calculatePolygonArea(Point vertices[], int numVertices)
+{
     double area = 0.0;
-    
-    for (int i = 0; i < numVertices; i++) {
+
+    for (int i = 0; i < numVertices; i++)
+    {
         int j = (i + 1) % numVertices;
         area += (vertices[i].x * vertices[j].y) - (vertices[j].x * vertices[i].y);
     }
@@ -17,12 +20,14 @@ double calculatePolygonArea(Point vertices[], int numVertices) {
     return area;
 }
 
-int main() {
+int main()
+{
     FILE *file;
     int numVertices;
 
     file = fopen("vertices.txt", "r");
-    if (file == NULL) {
+    if (file == NULL)
+    {
         perror("Erro ao abrir o arquivo");
         return EXIT_FAILURE;
     }
@@ -30,13 +35,15 @@ int main() {
     fscanf(file, "%d", &numVertices);
 
     Point *vertices = (Point *)malloc(numVertices * sizeof(Point));
-    if (vertices == NULL) {
-        perror("Erro de alocação de memória");
+    if (vertices == NULL)
+    {
+        perror("Erro de alocacao de memoria");
         fclose(file);
         return EXIT_FAILURE;
     }
 
-    for (int i = 0; i < numVertices; i++) {
+    for (int i = 0; i < numVertices; i++)
+    {
         fscanf(file, "%lf %lf", &vertices[i].x, &vertices[i].y);
     }
 
@@ -44,11 +51,12 @@ int main() {
 
     double area = calculatePolygonArea(vertices, numVertices);
 
-    if (area < 0) {
+    if (area < 0)
+    {
         area = -area;
     }
 
-    printf("A área do polígono é %.2lf\n", area);
+    printf("A area do poligono e %.2lf\n", area);
 
     free(vertices);
 
